@@ -1,5 +1,9 @@
 <template>
-  <router-link v-if="linkType === 'story'" :target="target" :to="href">
+  <router-link
+    v-if="linkType === 'story'"
+    :target="target"
+    :to="trailingSlash(href)"
+  >
     <slot />
   </router-link>
   <a v-else-if="linkType === 'email'" :href="`mailto:${href}`"><slot /></a>
@@ -28,6 +32,13 @@ export default defineComponent({
       href,
       target,
     };
+  },
+  methods: {
+    trailingSlash(link = '') {
+      if (!link.endsWith('/')) {
+        return link + '/';
+      }
+    },
   },
 });
 </script>
